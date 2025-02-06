@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <title>Web2B</title>
+    <body>
+        <h3>Call By, Apply, Bind, Arrow, and Multi Arrow</h3>
+        
+        <input type="button" id="btn" onclick="callby()" value="CallBy">
+        <input type="button" id="btnApply" onclick="callApply()" value="Call Apply">
+        <input type="button" id="btnBind" onclick="callBind()" value="Call Bind">
+        <input type="button" id="btnArrow" onclick="callArrow()" value="Call Arrow">
+        <input type="button" id="btnMultiArrow" onclick="callMultiArrow()" value="Call Multi Arrow">
+        
+        <p id="demo1"></p>
+    </body>
+    <script>
+        
+        function callby() {
+            const person = {
+                firstName: 'Alex',
+                lastName: 'Anadalpuram',
+                Get: function () {
+                    return this.firstName + " " + this.lastName;
+                }
+            };
+            document.getElementById("demo1").innerHTML = person.Get();
+        }
+
+
+        function callApply() {
+            const person = {
+                firstName: 'Alex',
+                lastName: 'Anadalpuram'
+            };
+
+            function getFullName(age, location) {
+                return this.firstName + " " + this.lastName + ", Age: " + age + ", Location: " + location;
+            }
+
+            document.getElementById("demo1").innerHTML = getFullName.apply(person, [25, 'New York']);
+        }
+
+       
+        function callBind() {
+            const person = {
+                firstName: 'Alex',
+                lastName: 'Anadalpuram'
+            };
+
+            function getFullName(age, location) {
+                return this.firstName + " " + this.lastName + ", Age: " + age + ", Location: " + location;
+            }
+
+            const boundFunc = getFullName.bind(person);
+            document.getElementById("demo1").innerHTML = boundFunc(25, 'New York');
+        }
+
+        function callArrow() {
+            const person = {
+                firstName: 'Alex',
+                lastName: 'Anadalpuram',
+                getFullName: () => {
+                    return person.firstName + " " + person.lastName; // Arrow function doesn't have its own `this`
+                }
+            };
+
+            document.getElementById("demo1").innerHTML = person.getFullName();
+        }
+
+      
+        function callMultiArrow() {
+            const sum = (a, b) => a + b;
+            const multiply = (a, b) => a * b;
+
+            const addition = sum(10, 15);
+            const multiplication = multiply(10, 15);
+
+            document.getElementById("demo1").innerHTML = "Addition: " + addition + ", Multiplication: " + multiplication;
+        }
+    </script>
+</html>
